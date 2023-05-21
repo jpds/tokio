@@ -189,7 +189,7 @@ impl TcpSocket {
         Ok(TcpSocket { inner })
     }
 
-    /// Allows the socket to bind to an in-use address.
+    /// Allows the socket to bind to an in-use address using `SO_REUSEADDR`.
     ///
     /// Behavior is platform specific. Refer to the target platform's
     /// documentation for more details.
@@ -245,8 +245,8 @@ impl TcpSocket {
         self.inner.reuse_address()
     }
 
-    /// Allows the socket to bind to an in-use port. Only available for unix systems
-    /// (excluding Solaris & Illumos).
+    /// Allows the socket to bind to an in-use port using `SO_REUSEPORT`. Only
+    /// available for unix systems (excluding Solaris & Illumos).
     ///
     /// Behavior is platform specific. Refer to the target platform's
     /// documentation for more details.
@@ -279,8 +279,8 @@ impl TcpSocket {
         self.inner.set_reuse_port(reuseport)
     }
 
-    /// Allows the socket to bind to an in-use port. Only available for unix systems
-    /// (excluding Solaris & Illumos).
+    /// Retrieves the value set for `SO_REUSEPORT` on this socket. Only
+    /// available for unix systems (excluding Solaris & Illumos).
     ///
     /// Behavior is platform specific. Refer to the target platform's
     /// documentation for more details.
