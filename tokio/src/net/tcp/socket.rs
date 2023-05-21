@@ -279,6 +279,16 @@ impl TcpSocket {
         self.inner.set_reuse_port(reuseport)
     }
 
+    /// Sets the `SO_REUSEPORT_LB` option on a socket, which allow multiple
+    /// programs or threads to bind to the same port and incoming connections
+    /// will be load balanced using a hash function.
+    ///
+    /// Only available on FreeBSD.
+    #[cfg(target_os = "freebsd")]
+    pub fn set_reuseport_lb(&self) -> io::Result<bool> {
+        self.inner.set_reuse_port_lb(reuseport_lb)
+    }
+
     /// Retrieves the value set for `SO_REUSEPORT` on this socket. Only
     /// available for unix systems (excluding Solaris & Illumos).
     ///
@@ -312,6 +322,13 @@ impl TcpSocket {
     )]
     pub fn reuseport(&self) -> io::Result<bool> {
         self.inner.reuse_port()
+    }
+
+    /// Retrieves the value set for `SO_REUSEPORT_LB` on this socket. Only
+    /// available on FreeBSD.
+    #[cfg(target_os = "freebsd")]
+    pub fn reuseport_lb(&self) -> io::Result<bool> {
+        self.inner.reuse_port_lb()
     }
 
     /// Sets the size of the TCP send buffer on this socket.
